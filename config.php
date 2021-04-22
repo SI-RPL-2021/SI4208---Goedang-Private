@@ -12,7 +12,7 @@ $alamat_toko = $_POST['alamat_toko'];
 
 //Query input menginput data kedalam tabel user
 $sql="insert into user (id,nama,nik,email,passwd,notelp,nama_toko,no_toko,alamat_toko) values
-('$nama','$nik','$email','$notelp','$nama_toko','$no_toko','$alamat_toko','$passwd')";
+('','$nama','$nik','$email','$passwd','$notelp','$nama_toko','$no_toko','$alamat_toko',)";
 
 //Mengeksekusi/menjalankan query diatas 
 $hasil=mysqli_query($con,$sql);
