@@ -7,6 +7,6 @@ $database="goedang"; /*Nama database yang dikoneksikan, sesuaikan dengan
 nama database anda*/
 
 // koneksi ke server
-$con = mysqli_connect($server,$user,$pass,$database) or die('Error Connection Network');
+$link = mysqli_connect($server,$user,$pass,$database) or die('Error Connection Network');
 
 ?>
