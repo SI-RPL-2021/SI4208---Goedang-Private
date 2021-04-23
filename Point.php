@@ -1,3 +1,19 @@
+<?php
+
+$user_id = 1234;
+$user_name = "dimas";
+$id_belanja = 32;
+$total_belanja = 30000;
+
+if ($user_id == 1234 & $user_name == "dimas" & $id_belanja == 32) {
+    $point = $total_belanja*10/100;
+}else {
+    echo "failed";
+}
+
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,7 +27,7 @@
     
     <script src="https://kit.fontawesome.com/3dd6eb1413.js" crossorigin="anonymous"></script>
 
-    <title>Point Akun!</title>
+    <title>Hello, world!</title>
     
   </head>
   <body>
@@ -34,8 +50,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
               </li>
-              <li class="nav-item">
+              <li class="dropdown">
                 <a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i></a>
+                
               </li>
               <li class="nav-item">
                 <a class="nav-link disabled mx-3" href="#">|</i></a>
@@ -51,14 +68,62 @@
         </div>
       </nav>
     </div>
-    <div class="container mt-5">
+    <div class="container-sm ps-5">
 
-            <!-- <div class="accordion accordion-flush shadow-sm p-3 mb-4 bg-body rounded" id="accordionFlushExample">
+    </div>
+    
+    <div class="container mt-5" >
 
-                <h1>Bagian 1 </h1>
+            <div class="accordion accordion-flush shadow-sm p-3 mb-4 bg-body rounded" id="accordionFlushExample"style="margin-top: 10%;" >
 
+                <div class ="row" style="text-align: center; background-color : white; ">
+                  <div class="col-sm">
+                    <h3>History</h3>
+                  </div>
+ 
+                </div>
 
-        </div> -->
+                <div class ="row" style="" >
+                  <div class="col-sm" style="text-align: left; margin-left: 5% ; ">
+                    <p style=”text-align:justify;”>
+                      <img src="img/point (1).png" style="float:left;  margin: 8px ;" width="50px" height="50px" alt="..." />
+                      <h5 class="card-title">Point Belanja Rp.<?php echo $total_belanja?></h5>
+                      <small class="card-text">18-03-2019 21:40</small>
+                      </p>
+                  </div>
+                  <div class="col-sm" style="text-align: right;margin-right: 5%; padding-top: 30px;">
+                    <h5>+ <?php echo $point?></h5>
+                  </div>
+                </div>
+
+                <div class ="row" style="" >
+                  <div class="col-sm" style="text-align: left; margin-left: 5% ; ">
+                    <p style=”text-align:justify;”>
+                      <img src="img/point (1).png" style="float:left;  margin: 8px ;" width="50px" height="50px" alt="..." />
+                      <h5 class="card-title">Point Belanja Rp.</h5>
+                      <small class="card-text">18-03-2019 21:40</small>
+                      </p>
+                  </div>
+                  <div class="col-sm" style="text-align: right;margin-right: 5%; padding-top: 30px;">
+                    <h5>+5000</h5>
+                  </div>
+                </div>
+                    <hr>
+                <div class ="row" style="" >
+                  <div class="col-sm" style="text-align: left; margin-left: 5% ; ">
+                    <p style=”text-align:justify;”>
+                      <img src="img/point (1).png" style="float:left;  margin: 8px ;" width="50px" height="50px" alt="..." />
+                      <h5 class="card-title">TOTAL POINT</h5>
+                      
+                      </p>
+                  </div>
+                  <div class="col-sm" style="text-align: right;margin-right: 5%; padding-top: 30px;">
+                    <h5>+5000</h5>
+                  </div>
+                </div>
+
+        
+        </div>
       
     </div>
   
@@ -131,3 +196,4 @@
     -->
   </body>
 </html>
+
