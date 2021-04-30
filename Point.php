@@ -1,5 +1,4 @@
 <?php
-
 $user_id = 1234;
 $user_name = "dimas";
 $id_belanja = 32;
@@ -11,7 +10,14 @@ if ($user_id == 1234 & $user_name == "dimas" & $id_belanja == 32) {
     echo "failed";
 }
 
+require_once "config.php";
 
+  session_start();
+
+  if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: login.php");
+    exit;
+  }
 ?>
 
 <!doctype html>
@@ -57,12 +63,30 @@ if ($user_id == 1234 & $user_name == "dimas" & $id_belanja == 32) {
               <li class="nav-item">
                 <a class="nav-link disabled mx-3" href="#">|</i></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Register</a>
-              </li>
+              <?php
+              if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true){
+                echo '
+                <li class="nav-item">
+                  <a class="nav-link" href="login.php">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="registrasi.php">Register</a>
+                </li>';
+              }
+              if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true){
+                echo '
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-circle"></i>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="edit akun profil.php">Profil</a></li>
+                    <li><a class="dropdown-item" href="Point.php">Poin Akun</a></li>
+                    <li><a class="dropdown-item" href="logout.php">Keluar</a></li>
+                  </ul>
+                </li>';
+              }
+            ?>
             </ul>
           
         </div>
