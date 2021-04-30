@@ -28,7 +28,7 @@
     
     $email = $passwd = $hashpass = '';
   
-    // Processing form data when form is submitted
+   
     if($_SERVER["REQUEST_METHOD"] == "POST"){
       $email = $_POST['email'];
       $passwd = $_POST['passwd'];
