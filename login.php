@@ -1,122 +1,110 @@
-<?php 
-session_start();
-include_once('db.php');
-$database = new database();
-
-if(isset($_POST['login']))
-{
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if(isset($_POST['remember']))
-    {
-      $remember = TRUE;
-    }
-    else
-    {
-      $remember = FALSE;
-    }
- 
-    if($database->login($username,$password,$remember))
-    {
-      header('location:login.php');
-    }
-}
-?>
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content=" Bootstrap contributors">
-    <title>Login Form</title>
- 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/sign-in/">
- 
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.82.0">
+    <title>Login</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
     <!-- Bootstrap core CSS -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
- 
- 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+
     <style>
-      .bd-placeholder-img {
-        font-size: 1rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+      .bg-image {
+        background-image: url('img/dus.jpg');
+        background-size: cover;
+        background-position: center;
       }
- 
-      @media (min-width: 500px) {
-        .bd-placeholder-img-lg {
-          font-size: 1.5rem;
-        }
-      }
-      #card {
-        background: #fbfbfb;
-        border-radius: 4px;
-        box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.30);
-        height: 470px;
-        margin: 3rem auto 5.1rem auto;
-        width: 350px;
-}
-      .satu {
-        font-size: 12px;
-        }
-      .dua {
-      font-size: 12px;
-       }
-       .tiga {
-        font-size: 14px;
-        }
-      .empat {
-      font-size: 14px;
-       }
     </style>
-    <link href="assets/css/signin.css" rel="stylesheet">
   </head>
-  <div id="card">
-  <div class="text-center">
-    <img class="" src="logonew.png" alt="" width="100" height="100">
-  <div class="text-left">
-  <form class="form-signin" method="post" action="">
-    <p class="font-weight-bold">Masuk<p>
-    <p class="tiga">Nomor HP atau email<p>
-    <label for="username" class="sr-only">Email</label>
-    <input type="text" id="username" class="form-control" placeholder="email@goedang.com" name="username" required autofocus>
+  <body>
+    <?php 
+    require_once "config.php";
     
-    <p class="empat">Password<p>
-    <label for="password" class="sr-only">Password</label>
-    <input type="text" id="password" class="form-control" placeholder="Password" name="password" required>
-  <div class="dua">
-    <label>
-      <input type="checkbox" value="remember-me" name="remember" class="dua"> Ingatkan Saya
-    </label>
-    </br>
-  <div class="text-center">
-    <button class="btn btn-primary" type="submit" style.display='block'  name="login">Masuk</button>
-  </br>
-  </br>
-  <div class="text-left">
-    <p class="satu" style="text-muted" >Toko anda belum terdaftar di Goedang <a href="#"  class="w3-text-blue">Registrasi</a></p>
-  </form>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
+    $email = $passwd = $hashpass = '';
+  
+    // Processing form data when form is submitted
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $email = $_POST['email'];
+      $passwd = $_POST['passwd'];
+      
+      $sql = mysqli_query($link, "SELECT * FROM user WHERE email = '".$email."'");
+      $result = mysqli_fetch_assoc($sql);
 
-<style type="text/css">
-body {
-background: url(storage.jpg) no-repeat fixed;
-   -webkit-background-size: 100% 100%;
-   -moz-background-size: 100% 100%;
-   -o-background-size: 100% 100%;
-   background-size: 100% 100%;
-}
-</style>
+      $id = $result['id'];
+      $hashpass = $result['passwd'];
 
-
-</body>
+      if(password_verify($passwd, $hashpass)){
+        // Password is correct, so start a new session
+        session_start();
+        // Store data in session variable
+        $_SESSION['loggedin'] = true;
+        $_SESSION['id'] = $id;
+        $_SESSION['email'] = $email;
+        
+        if($_POST['remember']=='Remember Me'){
+          $hour = time() + 3600 * 24 * 30;
+          setcookie('email', $email, $hour);
+          setcookie('passwd', $hashpass, $hour);
+        }
+        
+        if($_SESSION['id'] == 1){
+          header("location: adm_registereduser.php");
+        } else{
+          header("location: landing.php");
+        }
+        
+      } else{
+        // Display an error message if password is not valid
+        echo "The password you entered was not valid.";
+      }
+      // Close connection
+      mysqli_close($link);
+    }
+  ?>
+    <div class="container-fluid">
+        <div class="row no-gutter">
+          <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+          <div class="col-md-8 col-lg-6">
+            <div class="login d-flex align-items-center py-5">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-9 col-lg-8 mx-auto">
+                    <h3 class="login-heading mb-4">Selamat datang kembali!</h3>
+                    <form action="" method="POST">
+                      <div class="form-label-group">
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+                        <label for="email">Alamat Email</label>
+                      </div>
+      
+                      <div class="form-label-group">
+                        <input type="password" id="passwd" name="passwd" class="form-control" placeholder="Password" required>
+                        <label for="passwd">Kata Sandi</label>
+                      </div>
+      
+                      <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" id="remember" name="remember" value="Remember Me">
+                        <label class="custom-control-label" for="remember">Ingatkan saya</label>
+                      </div>
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Masuk</button>
+                    </div>
+                      <div class="text-center">
+                        <small>Belum daftar akun? <a href="Registrasi.php">Registrasi</a></small></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+  </body>
 </html>
