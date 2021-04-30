@@ -22,7 +22,7 @@
       <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light shadow mb-5 bg-body rounded">
         <div class="container-fluid d-flex justify-content-around">
           <a class="navbar-brand" href="#">
-            <img src="Goedang.png" alt="" height="40">
+            <img src="GOEDANG.png" alt="" height="40">
           </a>
           <form class="w-50">
               <div class="input-group border rounded-pill">
@@ -43,12 +43,32 @@
               <li class="nav-item">
                 <a class="nav-link disabled mx-3" href="#">|</i></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Register</a>
-              </li>
+              <?php
+              require_once "config.php";
+              session_start();
+              if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true){
+                echo '
+                <li class="nav-item">
+                  <a class="nav-link" href="login.php">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="registrasi.php">Register</a>
+                </li>';
+              }
+              if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true){
+                echo '
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-circle"></i>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="edit akun profil.php">Profil</a></li>
+                    <li><a class="dropdown-item" href="Point.php">Poin Akun</a></li>
+                    <li><a class="dropdown-item" href="logout.php">Keluar</a></li>
+                  </ul>
+                </li>';
+              }
+            ?>
             </ul>
 
           </div>
@@ -135,5 +155,7 @@
 </div>  
 
 <script src="app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+        
 </body>
 </html>
