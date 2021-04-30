@@ -20,15 +20,15 @@
         background-size: cover;
         background-position: center;
       }
-    </style>
+  </style>
   </head>
   <body>
     <?php 
+
     require_once "config.php";
     
     $email = $passwd = $hashpass = '';
   
-    // Processing form data when form is submitted
     if($_SERVER["REQUEST_METHOD"] == "POST"){
       $email = $_POST['email'];
       $passwd = $_POST['passwd'];
@@ -40,9 +40,9 @@
       $hashpass = $result['passwd'];
 
       if(password_verify($passwd, $hashpass)){
-        // Password is correct, so start a new session
+       
         session_start();
-        // Store data in session variable
+      
         $_SESSION['loggedin'] = true;
         $_SESSION['id'] = $id;
         $_SESSION['email'] = $email;
@@ -60,10 +60,10 @@
         }
         
       } else{
-        // Display an error message if password is not valid
+        
         echo "The password you entered was not valid.";
       }
-      // Close connection
+     
       mysqli_close($link);
     }
   ?>
