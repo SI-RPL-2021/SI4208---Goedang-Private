@@ -32,7 +32,7 @@
       $nik = $_POST['nik'];
       $email = $_POST['email'];
       $passwd = $_POST['kataSandi'];
-      $hashpass = password_hash($password, PASSWORD_DEFAULT);
+      $hashpass = password_hash($passwd, PASSWORD_DEFAULT);
       $notelp = $_POST['notelp'];
       $nama_toko = $_POST['nama_toko'];
       $no_toko = $_POST['nib'];
