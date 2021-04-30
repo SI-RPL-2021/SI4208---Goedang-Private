@@ -111,7 +111,7 @@ require_once "config.php";
                   <div class="col-sm" style="text-align: left; margin-left: 5% ; ">
                     <p style=”text-align:justify;”>
                       <img src="img/point (1).png" style="float:left;  margin: 8px ;" width="50px" height="50px" alt="..." />
-                      <h5 class="card-title">Point Belanja Rp.30000<?php echo $total_belanja?></h5>
+                      <h5 class="card-title">Point Belanja Rp.50000<?php echo $total_belanja?></h5>
                       <small class="card-text">18-03-2019 21:40</small>
                       </p>
                   </div>
