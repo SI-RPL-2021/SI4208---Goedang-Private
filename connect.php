@@ -1,4 +1,5 @@
 <?php
+
 // konfigurasi server
 $server="localhost"; /*local server localhost*/
 $user="root"; /*User server mysql anda*/
