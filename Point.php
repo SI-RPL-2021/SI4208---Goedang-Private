@@ -32,7 +32,7 @@ session_start();
     
     <script src="https://kit.fontawesome.com/3dd6eb1413.js" crossorigin="anonymous"></script>
 
-    <title>Hello, world!</title>
+    <title>Point</title>
     
   </head>
   <body>
