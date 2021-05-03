@@ -1,5 +1,4 @@
 <?php
-
 require_once "config.php";
 
 session_start();
@@ -30,9 +29,7 @@ if(isset($_POST['simpan'])){
         die("Gagal menyimpan perubahan...");
     }
 
-
 } else {
     die("Akses dilarang...");
 }
-
 ?>
