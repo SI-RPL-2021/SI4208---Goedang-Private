@@ -103,147 +103,40 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-sm-4 ps-5">
-            <div class="accordion accordion-flush shadow-sm p-3 mb-4 bg-body rounded" id="accordionFlushExample">
+          <div class="accordion accordion-flush shadow-sm p-3 mb-4 bg-body rounded" id="accordionFlushExample">
+            <?php
+              $selectkat = mysqli_query($link, "SELECT * FROM kategori");
+              $i=1;
+              while($kat = mysqli_fetch_assoc($selectkat)){
+                $selectsubkat = mysqli_query($link, "SELECT * FROM subkategori WHERE id_kat='".$kat['id_kat']."'");
 
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingOne">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    Makanan Ringan
-                  </button>
-                </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <div class="list-group">
-                      <button type="button" class="list-group-item list-group-item-action border-0">Permen & Cokelat</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Cookies & Cakes</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Biscuits & Wafers</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Keripik</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Kacang</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Jelly</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                echo'
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-kat'.$i.'">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse'.$i.'" aria-expanded="false" aria-controls="flush-collapse'.$i.'">
+                    '.$kat['nama_kat'].'
+                    </button>
+                  </h2>
+                  <div id="flush-collapse'.$i.'" class="accordion-collapse collapse" aria-labelledby="flush-heading'.$i.'" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <div class="list-group">
+                ';
 
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingTwo">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    Minuman
-                  </button>
-                </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <div class="list-group">
-                      <button type="button" class="list-group-item list-group-item-action border-0">Cokelat & Malt</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Probiotik</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Kopi</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Teh</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Susu</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Jus</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Soda</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Sirup</button>
+                while($subkat = mysqli_fetch_assoc($selectsubkat)){
+                  echo'<button type="button" class="list-group-item list-group-item-action border-0">'.$subkat['nama_subkat'].'</button>';
+                }
+                echo'
+                      </div>
                     </div>
-                  </div>
+                  </div>  
                 </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingThree">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                    Roti
-                  </button>
-                </h2>
-                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <div class="list-group">
-                      <button type="button" class="list-group-item list-group-item-action border-0">Roti Isi</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Roti Tawar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingFour">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                    Keperluan Dapur
-                  </button>
-                </h2>
-                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <div class="list-group">
-                      <button type="button" class="list-group-item list-group-item-action border-0">Minyak & Cuka</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Gula & Garam</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Saus & Kecap</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Rempah & Bumbu Masak</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Jelly & Pudding</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Tepung</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingFive">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                    Kesehatan & Sanitasi Pribadi
-                  </button>
-                </h2>
-                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <div class="list-group">
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perlengkapan Mandi</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perawatan Rambut</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perawatan Mulut</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perawatan Kulit</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perawatan Wanita</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perawatan Pria</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perawatan Kesehatan & P3K</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Suplemen Kesehatan</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingSix">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
-                    Perawatan Bayi
-                  </button>
-                </h2>
-                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <div class="list-group">
-                      <button type="button" class="list-group-item list-group-item-action border-0">Popok Bayi</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perawatan Rambut & Tubuh</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Kesehatan Bayi</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Kebersihan Alat Bayi</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingSeven">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
-                    Peralatan Rumah Tangga
-                  </button>
-                </h2>
-                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <div class="list-group">
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perlengkapan Kebersihan</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Perlengkapan Mencuci</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Produk Tisu</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Pembasmi Serangga</button>
-                      <button type="button" class="list-group-item list-group-item-action border-0">Baterai</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          
+                ';
+                $i==$i++;
+              }
+            ?>
+          </div>
         </div>
+        
         <div class="col-sm-8 pe-5">
           <div class="card w-100 shadow-sm p-3 mb-4 bg-body rounded border-light">
             <div class="card-body">

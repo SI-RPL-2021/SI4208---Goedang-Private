@@ -1,22 +1,80 @@
 <?php
-  require_once "config.php";
+    require_once "config.php";
 
-  session_start();
+    session_start();
 
-  if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-  }
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+        header("location: login.php");
+        exit;
+    }
 
-  // buat query untuk ambil data dari database
-  $sql = "SELECT * FROM user WHERE id='".$_SESSION['id']."'";
-  $query = mysqli_query($link, $sql);
-  $user = mysqli_fetch_assoc($query);
+    // buat query untuk ambil data dari database
+    $sql = "SELECT * FROM user WHERE id='".$_SESSION['id']."'";
+    $query = mysqli_query($link, $sql);
+    $user = mysqli_fetch_assoc($query);
 
-  // jika data yang di-edit tidak ditemukan
-  if( mysqli_num_rows($query) < 1 ){
-      die("Data tidak ditemukan...");
-  }
+    // jika data yang di-edit tidak ditemukan
+    if( mysqli_num_rows($query) < 1 ){
+        die("Data tidak ditemukan...");
+    }
+
+    $id = $_GET["id"];
+    
+    $sqlselect = mysqli_query($link, "SELECT * FROM kategori WHERE id_kat='".$id."'");
+    $select = mysqli_fetch_assoc($sqlselect);
+    
+    if( isset($_POST['edit'])){
+        $nama_kat =  $_POST['nama_kat']; 
+        $desk_kat = $_POST['desk_kat'];
+        
+        $sqlkat = mysqli_query($link, "UPDATE kategori SET nama_kat='$nama_kat', desk_kat='$desk_kat' WHERE id_kat='".$id."'");
+        $cek = mysqli_affected_rows($link);
+        
+        if($cek > 0){
+            echo "
+                <script>
+                    alert('Kategori berhasil diperbaharui.');
+                    document.location.href = 'adm_kategoriedit.php?id=".$id."';
+                </script>
+            ";
+        } elseif ($cek==0){
+            echo "
+                <script>
+                    alert('Tidak ada pembaharuan data.');
+                    document.location.href = 'adm_kategoriedit.php?id=".$id."';
+                </script>
+            ";
+        } else{
+            echo "
+                <script>
+                    alert('Edit kategori gagal.');
+                    document.location.href = 'adm_kategoriedit.php?id=".$id."';
+                </script>
+            ";
+        }
+    }
+
+    if(isset($_POST['delYes'])){
+        mysqli_query($link, "DELETE FROM subkategori WHERE id_kat=$id");
+        mysqli_query($link, "DELETE FROM kategori WHERE id_kat=$id");
+        $cek = mysqli_affected_rows($link);
+
+        if($cek > 0){
+            echo "
+                <script>
+                    alert('Data berhasil dihapus');
+                    document.location.href = 'adm_kategori.php';
+                </script>
+            ";
+        } else {
+            echo "
+                <script>
+                    alert('Data gagal dihapus');
+                    document.location.href = 'adm_kategoriedit.php';
+                </script>
+            ";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +137,7 @@
                                 Profil
                             </a>
                             <div class="sb-sidenav-menu-heading">Katalog</div>
-                            <a class="nav-link active" href="adm_produk.php">
+                            <a class="nav-link" href="adm_produk.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Produk
                             </a>
@@ -110,70 +168,54 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">User Terdaftar</h1>
+                    <div class="container-fluid px-5">
+                        <h1 class="mt-4">Edit Kategori</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">User Terdaftar</li>
+                            <li class="breadcrumb-item"><a href="adm_kategori.php">Kategori</a></li>
+                            <li class="breadcrumb-item active">Edit Kategori</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-users mr-1"></i>
-                                User
+                                Kategori
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <?php
-                                        require("config.php");
-                                        $sql = mysqli_query($link, "SELECT * FROM user");
-                                        $cek = mysqli_num_rows($sql);
-                                        $i=1;
-                                        if($cek==0){
-                                        echo '
-                                            <div class="container" style="margin-top: 70px; margin-bottom: 70px;">
-                                            <p class="lead" style="text-align: center;">No user data.</p>
-                                            </div>
-                                        ';
-                                        } else{
-                                        echo '
-                                            <table class="table table-hover table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Nama Lengkap</th>
-                                                <th scope="col">E-mail</th>
-                                                <th scope="col">No. Telp</th>
-                                                <th scope="col">NIK</th>
-                                                <th scope="col">Nama Toko</th>
-                                                <th scope="col">NIB</th>
-                                                <th scope="col">Alamat Toko</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            ';
-                                        while($tarik=mysqli_fetch_assoc($sql)){
-                                            echo "
-                                            <tr>
-                                            <th scope='row'>".$i."</th>";
-                                            echo '
-                                            <td width="200">'.$tarik['nama'].'</td>
-                                            <td>'.$tarik['email'].'</td>
-                                            <td>'.$tarik['notelp'].'</td>
-                                            <td>'.$tarik['nik'].'</td>
-                                            <td width="110">'.$tarik['nama_toko'].'</td>
-                                            <td>'.$tarik['no_toko'].'</td>
-                                            <td>'.$tarik['alamat_toko'].'</td>
-                                            </tr>
-                                            ';
-                                            $i==$i++;
-                                        }
-                                        echo '
-                                            </tbody>
-                                            </table>
-                                        ';
-                                        }
-                                    ?>
-                                    </table>
+                                <form class="p-3" action="" method="POST" enctype="multipart/form-data">
+                                    <div class="form-group mb-3">
+                                        <label for="nama_kat">Nama Kategori</label>
+                                        <input type="text" class="form-control" name="nama_kat" placeholder="Nama Produk" value="<?= $select['nama_kat']?>">
+                                    </div>
+                                    
+                                    <div class="form-group mb-3">
+                                        <label for="desk_kat" class="form-label">Deskripsi</label>
+                                        <textarea class="form-control" id="desk_kat" placeholder="Deskripsi Produk" name="desk_kat" rows="2"><?= $select['desk_kat']?></textarea>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="submit" class="btn btn-primary" name="edit"><i class="fas fa-save"></i> Simpan</button>
+                                        <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#confirmDel"><i class="fas fa-trash"></i> Hapus</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="confirmDel" tabindex="-1" aria-labelledby="confirmDel" aria-hidden="true">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Hapus Kategori</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Yakin untuk menghapus kategori <strong><?= $select['nama_kat']?></strong>?</p>
+                                    <strong>Tindakan ini juga akan menghapus semua subkategori dari kategori <?= $select['nama_kat']?> dan tidak dapat dibatalkan.</strong>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="" method="POST"> 
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                                    <button type="submit" class="btn btn-danger" name="delYes">Ya</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
