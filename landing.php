@@ -8,7 +8,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="css/footer.css" rel="stylesheet">
-    
+    <link href="css/main.css" rel="stylesheet">
+
     <script src="https://kit.fontawesome.com/3dd6eb1413.js" crossorigin="anonymous"></script>
 
     <title>Goedang</title>
@@ -32,10 +33,10 @@
           
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+              <a class="nav-link" href="keranjangg.php"><i class="fas fa-shopping-cart"></i></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i></a>
+              <a class="nav-link" href="pesanansaya.php"><i class="fas fa-clipboard-list"></i></a>
             </li>
             <li class="nav-item">
               <a class="nav-link disabled mx-3" href="#">|</i></a>
@@ -109,7 +110,7 @@
               $i=1;
               while($kat = mysqli_fetch_assoc($selectkat)){
                 $selectsubkat = mysqli_query($link, "SELECT * FROM subkategori WHERE id_kat='".$kat['id_kat']."'");
-
+                $kat_url = seoUrl($kat['nama_kat']);
                 echo'
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="flush-kat'.$i.'">
@@ -120,10 +121,14 @@
                   <div id="flush-collapse'.$i.'" class="accordion-collapse collapse" aria-labelledby="flush-heading'.$i.'" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                       <div class="list-group">
+                        <a class="list-group-item list-group-item-action border-0" href="katalog.php/'.$kat_url.'?a='.$kat['id_kat'].'" role="button">Semua '.$kat['nama_kat'].'</a>
                 ';
 
                 while($subkat = mysqli_fetch_assoc($selectsubkat)){
-                  echo'<button type="button" class="list-group-item list-group-item-action border-0">'.$subkat['nama_subkat'].'</button>';
+                  $subkat_url = seoUrl($subkat['nama_subkat']);
+                  echo'
+                  <a class="list-group-item list-group-item-action border-0" href="katalog.php/'.$subkat_url.'?c='.$subkat['id_subkat'].'" role="button">'.$subkat['nama_subkat'].'</a>
+                  ';
                 }
                 echo'
                       </div>
@@ -138,7 +143,7 @@
         </div>
         
         <div class="col-sm-8 pe-5">
-          <div class="card w-100 shadow-sm p-3 mb-4 bg-body rounded border-light">
+          <!-- <div class="card w-100 shadow-sm p-3 mb-4 bg-body rounded border-light">
             <div class="card-body">
               <h3>Penawaran Khusus</h3>
               <div class="row row-cols-1 row-cols-md-3 g-3">
@@ -177,57 +182,45 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           
           <div class="card w-100 shadow-sm p-3 mb-5 bg-body rounded border-light">
             <div class="card-body">
-              <h3>Produk Terlaris</h3>
+              <h3>Produk</h3>
               <div class="row row-cols-1 row-cols-md-4 g-3">
-                <div class="col">
-                  <div class="card h-100 border-light">
-                    <img src="img/chocolatos.jpg" class="card-img-top" alt="chocolatos">
-                    <div class="card-body">
-                      <h5 class="card-title">Chocolatos</h5>
-                      <p class="card-text">Rp 10.600<br>24 x 9gr</p>
-                      <button type="button" class="btn btn-primary btn-sm">Tambah</button>
+                <?php
+                  $selectprod = mysqli_query($link, "SELECT * FROM produk");
+                  while($produk = mysqli_fetch_assoc($selectprod)){
+                    $selectimg = mysqli_query($link, "SELECT images FROM produk_img WHERE id_produk='".$produk['id_produk']."'");
+                    $j = 0;
+                    while($img = mysqli_fetch_assoc($selectimg)){
+                      if($j==0){
+                        $produk_img = $img['images'];
+                      }
+                      $j == $j++;
+                    }
+                    echo '
+                    <div class="col">
+                      <div class="card h-100 border-light">
+                      <a href="detailproduk.php?p='.$produk['id_produk'].'" class="stretched-link"><img src="uploads/'.$produk_img.'" class="card-img-top"></a>
+                        <div class="card-body">
+                        <h6 class="card-title">'.$produk['nama_produk'].'</h6>
+                          <p class="card-text"><strong>Rp '.$produk['harga'].'</strong></p>
+                          <small>'.$produk['unit'].'<br>'.$produk['berat'].'gr</small>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><button type="button" class="btn btn-primary btn-sm">Tambah</button></li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100 border-light">
-                    <img src="img/goodtime.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Good Time</h5>
-                      <p class="card-text">Rp 11.200<br>12 x 16gr</p>
-                      <button type="button" class="btn btn-primary btn-sm">Tambah</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100 border-light">
-                    <img src="img/oreo.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Oreo</h5>
-                      <p class="card-text">Rp 21.800<br>12 x 38gr</p>
-                      <button type="button" class="btn btn-primary btn-sm">Tambah</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100 border-light">
-                    <img src="img/better.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Better</h5>
-                      <p class="card-text">Rp 9.500<br>10 x 22gr</p>
-                      <button type="button" class="btn btn-primary btn-sm">Tambah</button>
-                    </div>
-                  </div>
-                </div>
+                    ';
+                  }
+                ?>
               </div>
             </div>
           </div>
 
-          <nav aria-label="Page navigation example">
+          <!-- <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-end">
               <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
@@ -239,7 +232,7 @@
                 <a class="page-link" href="#">Next</a>
               </li>
             </ul>
-          </nav>
+          </nav> -->
         
         </div>
       </div>
