@@ -26,7 +26,8 @@
             <div class="input-group border rounded-pill">
               <input type="search" placeholder=" Cari Produk atau Nama Brand" aria-describedby="button-addon3" class="form-control bg-none border-0">
               <div class="input-group-append border-0">
-                <button id="button-addon3" type="button" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+                <a id="button-addon3" role="button" class="btn btn-link text-primary" href="cari.php"><i class="fa fa-search"></i></a>
+                <!-- <a class="btn btn-secondary btn-sm" href="adm_produkedit.php?id='.$produk['id_produk'].'" role="button"><i class="far fa-edit"></i></a> -->
               </div>
             </div>
           </form>
@@ -254,7 +255,7 @@
                       <h3 class="f-title f_600 t_color f_size_18">Tentang</h3>
                       <ul class="list-unstyled f_list">
                           <li><a href="#">Goedang</a></li>
-                          <li><a href="#">Kontak</a></li>
+                          <li><a href="pesan.php">Kontak</a></li>
                       </ul>
                   </div>
               </div>

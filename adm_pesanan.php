@@ -65,7 +65,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="landing.php">
+                            <a class="nav-link" href="adm_dashboard.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -74,9 +74,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Data User
                             </a>
-                            <a class="nav-link" href="adm_profile.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
-                                Profil
+                            <a class="nav-link" href="adm_pesan.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-inbox"></i></div>
+                                Pesan
                             </a>
                             <div class="sb-sidenav-menu-heading">Katalog</div>
                             <a class="nav-link" href="adm_produk.php">
@@ -87,12 +87,12 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Kategori
                             </a>
-                            <a class="nav-link" href="cabang.php">
+                            <a class="nav-link" href="data_cabang.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
                                 Cabang
                             </a>
                             <div class="sb-sidenav-menu-heading">Transaksi</div>
-                            <a class="nav-link active" href="adm_pesanan.php">
+                            <a class="nav-link" href="adm_pesanan.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-shopping-bag"></i></div>
                                 Pesanan
                             </a>

@@ -92,7 +92,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Admin Dashboard</title>
-        <link href="bootstrap.css" rel="stylesheet" />
+        <link href="css/bootstrap.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
@@ -130,7 +130,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="landing.php">
+                            <a class="nav-link" href="adm_dashboard.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -139,9 +139,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Data User
                             </a>
-                            <a class="nav-link" href="adm_profile.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
-                                Profil
+                            <a class="nav-link" href="adm_pesan.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-inbox"></i></div>
+                                Pesan
                             </a>
                             <div class="sb-sidenav-menu-heading">Katalog</div>
                             <a class="nav-link" href="adm_produk.php">
@@ -152,7 +152,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Kategori
                             </a>
-                            <a class="nav-link" href="cabang.php">
+                            <a class="nav-link" href="data_cabang.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
                                 Cabang
                             </a>
@@ -258,9 +258,9 @@
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-        <script src="scripts.js"></script>
+        <script src="css/scripts.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
-        <script src="datatables-demo.js"></script> 
+        <script src="css/datatables-demo.js"></script> 
     </body>
 </html>

@@ -111,73 +111,59 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-5">
-                        <h1 class="mt-4">Katalog Produk</h1>
+                        <h1 class="mt-4">Pembayaran</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Produk</li>
+                            <li class="breadcrumb-item active">Pembayaran</li>
                         </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="d-grid gap-2">
-                                    <a class="btn btn-primary" href="adm_produkadd.php" role="button">Tambah Produk Baru</a>
-                                </div>
-                            </div>
-                        </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-users mr-1"></i>
-                                Produk
+                                Informasi Pesanan
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <?php
-                                        $selectprod = mysqli_query($link, "SELECT * FROM produk");
-                                        $cek1 = mysqli_num_rows($selectprod);
+                                        $selectpay = mysqli_query($link, "SELECT * FROM pembayaran");
                                         $i=1;
-                                        if($cek1==0){
-                                            echo '
-                                            <div class="container" style="margin-top: 70px; margin-bottom: 70px;">
-                                            <p class="lead" style="text-align: center;">No category data.</p>
-                                            </div>
-                                            ';
-                                        } else{
+                                        // $cek1 = mysqli_num_rows($selectorder);
+                                        // if($cek1==0){
+                                        //     echo '
+                                        //     <div class="container" style="margin-top: 70px; margin-bottom: 70px;">
+                                        //     <p class="lead" style="text-align: center;">No category data.</p>
+                                        //     </div>
+                                        //     ';
+                                        // } else{
                                             echo '
                                             <table class="table table-hover table-bordered align-middle" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col" class="text-center">#</th>
-                                                        <th scope="col" class="text-center">Nama Produk</th>
-                                                        <th scope="col" class="text-center">Kategori</th>
-                                                        <th scope="col" class="text-center">Sub Kategori</th>
-                                                        <th scope="col" class="text-center">Harga</th>
-                                                        <th scope="col" class="text-center">Stok</th>
-                                                        
-                                                        <th scope="col" class="text-center">Min. Beli</th>
-                                                        <th scope="col" class="text-center">Deskripsi</th>
-                                                        <th scope="col" class="text-center">Vendor</th>
-                                                        <th scope="col" class="text-center"></th>
+                                                        <th scope="col" class="text-center" width="15">#</th>
+                                                        <th scope="col" class="text-center" width="100">No. Pesanan</th>
+                                                        <th scope="col" class="text-center">Atas Nama</th>
+                                                        <th scope="col" class="text-center">Bank Asal</th>
+                                                        <th scope="col" class="text-center">Bank Tujuan</th>
+                                                        <th scope="col" class="text-center">Nominal</th>
+                                                        <th scope="col" class="text-center" width="130">Tanggal Transfer</th>
+                                                        <th scope="col" class="text-center" width="30">Bukti</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                             ';
-                                            while($produk = mysqli_fetch_assoc($selectprod)){
-                                                $selectkat = mysqli_query($link, "SELECT * FROM kategori, subkategori WHERE kategori.id_kat='".$produk['id_kat']."' AND subkategori.id_subkat='".$produk['id_subkat']."'");
-                                                $kat = mysqli_fetch_assoc($selectkat);
+                                            while($pay = mysqli_fetch_assoc($selectpay)){
                                                 echo "
                                                 <tr>
                                                     <th scope='row'class='text-center'>".$i."</th>
                                                 ";
                                                 echo '
-                                                    <td>'.$produk['nama_produk'].'</td>
-                                                    <td>'.$kat['nama_kat'].'</td>
-                                                    <td>'.$kat['nama_subkat'].'</td>
-                                                    <td>Rp'.$produk['harga'].'</td>
-                                                    <td>'.$produk['stok'].'</td>
-                                                    <td>'.$produk['min_beli'].'</td>
-                                                    <td width="200">'.$produk['desk_produk'].'</td>
-                                                    <td>'.$produk['vendor'].'</td>
-                                                    <td>
-                                                        <a class="btn btn-secondary btn-sm" href="adm_produkedit.php?id='.$produk['id_produk'].'" role="button"><i class="far fa-edit"></i></a>
+                                                    <td class="text-center">'.$pay['no_order'].'</td>
+                                                    <td>'.$pay['atas_nama'].'</td>
+                                                    <td>'.$pay['bank_asal'].'</td>
+                                                    <td>'.$pay['bank_tujuan'].'</td>
+                                                    <td>Rp '.$pay['jumlah_tf'].'</td>
+                                                    <td class="text-center">'.$pay['tgl_tf'].'</td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#buktiTf"><i class="fas fa-eye"></i></button>
                                                     </td>
                                                 </tr>
                                                 ';
@@ -187,11 +173,24 @@
                                                     </tbody>
                                                 </table>
                                             ';
-                                        }
+                                        // }
                                     ?>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal fade" id="buktiTf" tabindex="-1" aria-labelledby="addStatus" aria-hidden="true">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Bukti Pembayaran</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body text-center">
+                            <img src="uploads/<?=$pay['bukti_tf']?>" class="img-thumbnail" style="">
+                          </div>
+                        </div>
+                      </div>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">

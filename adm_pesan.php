@@ -111,74 +111,52 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-5">
-                        <h1 class="mt-4">Katalog Produk</h1>
+                        <h1 class="mt-4">Pesan</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Produk</li>
+                            <li class="breadcrumb-item active">Pesan</li>
                         </ol>
                         <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="d-grid gap-2">
-                                    <a class="btn btn-primary" href="adm_produkadd.php" role="button">Tambah Produk Baru</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-users mr-1"></i>
-                                Produk
+                                <i class="fas fa-inbox"></i>
+                                Pesan Masuk
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <?php
-                                        $selectprod = mysqli_query($link, "SELECT * FROM produk");
-                                        $cek1 = mysqli_num_rows($selectprod);
+                                        $selectpesan = mysqli_query($link, "SELECT * FROM pesan");
                                         $i=1;
-                                        if($cek1==0){
-                                            echo '
-                                            <div class="container" style="margin-top: 70px; margin-bottom: 70px;">
-                                            <p class="lead" style="text-align: center;">No category data.</p>
-                                            </div>
-                                            ';
-                                        } else{
+                                        // $cek1 = mysqli_num_rows($selectorder);
+                                        // if($cek1==0){
+                                        //     echo '
+                                        //     <div class="container" style="margin-top: 70px; margin-bottom: 70px;">
+                                        //     <p class="lead" style="text-align: center;">No category data.</p>
+                                        //     </div>
+                                        //     ';
+                                        // } else{
                                             echo '
                                             <table class="table table-hover table-bordered align-middle" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col" class="text-center">#</th>
-                                                        <th scope="col" class="text-center">Nama Produk</th>
-                                                        <th scope="col" class="text-center">Kategori</th>
-                                                        <th scope="col" class="text-center">Sub Kategori</th>
-                                                        <th scope="col" class="text-center">Harga</th>
-                                                        <th scope="col" class="text-center">Stok</th>
-                                                        
-                                                        <th scope="col" class="text-center">Min. Beli</th>
-                                                        <th scope="col" class="text-center">Deskripsi</th>
-                                                        <th scope="col" class="text-center">Vendor</th>
-                                                        <th scope="col" class="text-center"></th>
+                                                        <th scope="col" class="text-center">Nama Pengirim</th>
+                                                        <th scope="col" class="text-center">E-mail</th>
+                                                        <th scope="col" class="text-center">No. Telepon</th>
+                                                        <th scope="col" class="text-center">Isi Pesan</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                             ';
-                                            while($produk = mysqli_fetch_assoc($selectprod)){
-                                                $selectkat = mysqli_query($link, "SELECT * FROM kategori, subkategori WHERE kategori.id_kat='".$produk['id_kat']."' AND subkategori.id_subkat='".$produk['id_subkat']."'");
-                                                $kat = mysqli_fetch_assoc($selectkat);
+                                            while($pesan = mysqli_fetch_assoc($selectpesan)){
                                                 echo "
                                                 <tr>
                                                     <th scope='row'class='text-center'>".$i."</th>
                                                 ";
                                                 echo '
-                                                    <td>'.$produk['nama_produk'].'</td>
-                                                    <td>'.$kat['nama_kat'].'</td>
-                                                    <td>'.$kat['nama_subkat'].'</td>
-                                                    <td>Rp'.$produk['harga'].'</td>
-                                                    <td>'.$produk['stok'].'</td>
-                                                    <td>'.$produk['min_beli'].'</td>
-                                                    <td width="200">'.$produk['desk_produk'].'</td>
-                                                    <td>'.$produk['vendor'].'</td>
-                                                    <td>
-                                                        <a class="btn btn-secondary btn-sm" href="adm_produkedit.php?id='.$produk['id_produk'].'" role="button"><i class="far fa-edit"></i></a>
-                                                    </td>
+                                                    <td>'.$pesan['nama_sender'].'</td>
+                                                    <td>'.$pesan['email'].'</td>
+                                                    <td>'.$pesan['notelp'].'</td>
+                                                    <td>'.$pesan['isipesan'].'</td>
                                                 </tr>
                                                 ';
                                                 $i==$i++;
@@ -187,7 +165,7 @@
                                                     </tbody>
                                                 </table>
                                             ';
-                                        }
+                                        // }
                                     ?>
                                 </div>
                             </div>
